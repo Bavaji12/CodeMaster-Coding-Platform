@@ -80,7 +80,7 @@ export const getHealthCheckUrl = () => {
 
 
 
-  return `/api/healthz`
+  return `http://localhost:5000/api/healthz`
 }
 
 /**
@@ -104,7 +104,7 @@ export const healthCheck = async ( options?: Parameters<typeof customFetch>[1]):
 
 export const getHealthCheckQueryKey = () => {
     return [
-    `/api/healthz`
+    `http://localhost:5000/api/healthz`
     ] as const;
     }
 
@@ -158,7 +158,7 @@ export const getRegisterUrl = () => {
 
 
 
-  return `/api/auth/register`
+  return `http://localhost:5000/api/auth/register`
 }
 
 /**
@@ -246,7 +246,7 @@ export const getLoginUrl = () => {
 
 
 
-  return `/api/auth/login`
+  return `http://localhost:5000/api/auth/login`
 }
 
 /**
@@ -334,7 +334,7 @@ export const getLogoutUrl = () => {
 
 
 
-  return `/api/auth/logout`
+  return `http://localhost:5000/api/auth/logout`
 }
 
 /**
@@ -408,7 +408,7 @@ export const getGetCurrentUserUrl = () => {
 
 
 
-  return `/api/auth/me`
+  return `http://localhost:5000/api/auth/me`
 }
 
 /**
@@ -431,7 +431,7 @@ export const getCurrentUser = async ( options?: Parameters<typeof customFetch>[1
 
 export const getGetCurrentUserQueryKey = () => {
     return [
-    `/api/auth/me`
+    `http://localhost:5000/api/auth/me`
     ] as const;
     }
 
@@ -492,7 +492,7 @@ export const getListProblemsUrl = (params?: ListProblemsParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `/api/problems?${stringifiedParams}` : `/api/problems`
+  return stringifiedParams.length > 0 ? `http://localhost:5000/api/problems?${stringifiedParams}` : `http://localhost:5000/api/problems`
 }
 
 /**
@@ -515,7 +515,7 @@ export const listProblems = async (params?: ListProblemsParams, options?: Parame
 
 export const getListProblemsQueryKey = (params?: ListProblemsParams,) => {
     return [
-    `/api/problems`, ...(params ? [params] : [])
+    `http://localhost:5000/api/problems`, ...(params ? [params] : [])
     ] as const;
     }
 
@@ -569,7 +569,7 @@ export const getGetProblemUrl = (slug: string,) => {
 
 
 
-  return `/api/problems/${slug}`
+  return `http://localhost:5000/api/problems/${slug}`
 }
 
 /**
@@ -592,7 +592,7 @@ export const getProblem = async (slug: string, options?: Parameters<typeof custo
 
 export const getGetProblemQueryKey = (slug: string,) => {
     return [
-    `/api/problems/${slug}`
+    `http://localhost:5000/api/problems/${slug}`
     ] as const;
     }
 
@@ -646,7 +646,7 @@ export const getRunCodeUrl = () => {
 
 
 
-  return `/api/submissions/run`
+  return `http://localhost:5000/api/submissions/run`
 }
 
 /**
@@ -741,7 +741,7 @@ export const getListSubmissionsUrl = (params?: ListSubmissionsParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `/api/submissions?${stringifiedParams}` : `/api/submissions`
+  return stringifiedParams.length > 0 ? `http://localhost:5000/api/submissions?${stringifiedParams}` : `http://localhost:5000/api/submissions`
 }
 
 /**
@@ -764,7 +764,7 @@ export const listSubmissions = async (params?: ListSubmissionsParams, options?: 
 
 export const getListSubmissionsQueryKey = (params?: ListSubmissionsParams,) => {
     return [
-    `/api/submissions`, ...(params ? [params] : [])
+    `http://localhost:5000/api/submissions`, ...(params ? [params] : [])
     ] as const;
     }
 
@@ -818,7 +818,7 @@ export const getSubmitCodeUrl = () => {
 
 
 
-  return `/api/submissions`
+  return `http://localhost:5000/api/submissions`
 }
 
 /**
@@ -906,7 +906,7 @@ export const getGetSubmissionUrl = (id: number,) => {
 
 
 
-  return `/api/submissions/${id}`
+  return `http://localhost:5000/api/submissions/${id}`
 }
 
 /**
@@ -929,7 +929,7 @@ export const getSubmission = async (id: number, options?: Parameters<typeof cust
 
 export const getGetSubmissionQueryKey = (id: number,) => {
     return [
-    `/api/submissions/${id}`
+    `http://localhost:5000/api/submissions/${id}`
     ] as const;
     }
 
@@ -983,7 +983,7 @@ export const getGetDashboardUrl = () => {
 
 
 
-  return `/api/dashboard`
+  return `http://localhost:5000/api/dashboard`
 }
 
 /**
@@ -1006,7 +1006,7 @@ export const getDashboard = async ( options?: Parameters<typeof customFetch>[1])
 
 export const getGetDashboardQueryKey = () => {
     return [
-    `/api/dashboard`
+    `http://localhost:5000/api/dashboard`
     ] as const;
     }
 
@@ -1060,7 +1060,7 @@ export const getGetMyProfileUrl = () => {
 
 
 
-  return `/api/users/me`
+  return `http://localhost:5000/api/users/me`
 }
 
 /**
@@ -1083,7 +1083,7 @@ export const getMyProfile = async ( options?: Parameters<typeof customFetch>[1])
 
 export const getGetMyProfileQueryKey = () => {
     return [
-    `/api/users/me`
+    `http://localhost:5000/api/users/me`
     ] as const;
     }
 
@@ -1137,7 +1137,7 @@ export const getUpdateMyProfileUrl = () => {
 
 
 
-  return `/api/users/me`
+  return `http://localhost:5000/api/users/me`
 }
 
 /**
@@ -1225,7 +1225,7 @@ export const getGetPublicProfileUrl = (username: string,) => {
 
 
 
-  return `/api/users/${username}`
+  return `http://localhost:5000/api/users/${username}`
 }
 
 /**
@@ -1248,7 +1248,7 @@ export const getPublicProfile = async (username: string, options?: Parameters<ty
 
 export const getGetPublicProfileQueryKey = (username: string,) => {
     return [
-    `/api/users/${username}`
+    `http://localhost:5000/api/users/${username}`
     ] as const;
     }
 
@@ -1309,7 +1309,7 @@ export const getGetLeaderboardUrl = (params?: GetLeaderboardParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `/api/leaderboard?${stringifiedParams}` : `/api/leaderboard`
+  return stringifiedParams.length > 0 ? `http://localhost:5000/api/leaderboard?${stringifiedParams}` : `http://localhost:5000/api/leaderboard`
 }
 
 /**
@@ -1332,7 +1332,7 @@ export const getLeaderboard = async (params?: GetLeaderboardParams, options?: Pa
 
 export const getGetLeaderboardQueryKey = (params?: GetLeaderboardParams,) => {
     return [
-    `/api/leaderboard`, ...(params ? [params] : [])
+    `http://localhost:5000/api/leaderboard`, ...(params ? [params] : [])
     ] as const;
     }
 
@@ -1386,7 +1386,7 @@ export const getGetAdminStatsUrl = () => {
 
 
 
-  return `/api/admin/stats`
+  return `http://localhost:5000/api/admin/stats`
 }
 
 /**
@@ -1409,7 +1409,7 @@ export const getAdminStats = async ( options?: Parameters<typeof customFetch>[1]
 
 export const getGetAdminStatsQueryKey = () => {
     return [
-    `/api/admin/stats`
+    `http://localhost:5000/api/admin/stats`
     ] as const;
     }
 
@@ -1470,7 +1470,7 @@ export const getListAdminProblemsUrl = (params?: ListAdminProblemsParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `/api/admin/problems?${stringifiedParams}` : `/api/admin/problems`
+  return stringifiedParams.length > 0 ? `http://localhost:5000/api/admin/problems?${stringifiedParams}` : `http://localhost:5000/api/admin/problems`
 }
 
 /**
@@ -1493,7 +1493,7 @@ export const listAdminProblems = async (params?: ListAdminProblemsParams, option
 
 export const getListAdminProblemsQueryKey = (params?: ListAdminProblemsParams,) => {
     return [
-    `/api/admin/problems`, ...(params ? [params] : [])
+    `http://localhost:5000/api/admin/problems`, ...(params ? [params] : [])
     ] as const;
     }
 
@@ -1547,7 +1547,7 @@ export const getCreateProblemUrl = () => {
 
 
 
-  return `/api/admin/problems`
+  return `http://localhost:5000/api/admin/problems`
 }
 
 /**
@@ -1635,7 +1635,7 @@ export const getUpdateProblemUrl = (id: number,) => {
 
 
 
-  return `/api/admin/problems/${id}`
+  return `http://localhost:5000/api/admin/problems/${id}`
 }
 
 /**
@@ -1724,7 +1724,7 @@ export const getDeleteProblemUrl = (id: number,) => {
 
 
 
-  return `/api/admin/problems/${id}`
+  return `http://localhost:5000/api/admin/problems/${id}`
 }
 
 /**
@@ -1798,7 +1798,7 @@ export const getSetProblemActiveUrl = (id: number,) => {
 
 
 
-  return `/api/admin/problems/${id}/active`
+  return `http://localhost:5000/api/admin/problems/${id}/active`
 }
 
 /**
