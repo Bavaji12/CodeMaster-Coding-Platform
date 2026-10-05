@@ -26,7 +26,7 @@ export default defineConfig({
       target: "generated",
       client: "react-query",
       mode: "split",
-      baseUrl: "http://localhost:5000/api",
+      baseUrl: "https://codemaster-api-rssx.onrender.com/api",
       clean: true,
       prettier: true,
       override: {

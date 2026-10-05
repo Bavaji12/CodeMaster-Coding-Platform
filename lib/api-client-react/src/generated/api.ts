@@ -80,7 +80,7 @@ export const getHealthCheckUrl = () => {
 
 
 
-  return `http://localhost:5000/api/healthz`
+  return `https://codemaster-api-rssx.onrender.com/api/healthz`
 }
 
 /**
@@ -104,7 +104,7 @@ export const healthCheck = async ( options?: Parameters<typeof customFetch>[1]):
 
 export const getHealthCheckQueryKey = () => {
     return [
-    `http://localhost:5000/api/healthz`
+    `https://codemaster-api-rssx.onrender.com/api/healthz`
     ] as const;
     }
 
@@ -158,7 +158,7 @@ export const getRegisterUrl = () => {
 
 
 
-  return `http://localhost:5000/api/auth/register`
+  return `https://codemaster-api-rssx.onrender.com/api/auth/register`
 }
 
 /**
@@ -246,7 +246,7 @@ export const getLoginUrl = () => {
 
 
 
-  return `http://localhost:5000/api/auth/login`
+  return `https://codemaster-api-rssx.onrender.com/api/auth/login`
 }
 
 /**
@@ -334,7 +334,7 @@ export const getLogoutUrl = () => {
 
 
 
-  return `http://localhost:5000/api/auth/logout`
+  return `https://codemaster-api-rssx.onrender.com/api/auth/logout`
 }
 
 /**
@@ -408,7 +408,7 @@ export const getGetCurrentUserUrl = () => {
 
 
 
-  return `http://localhost:5000/api/auth/me`
+  return `https://codemaster-api-rssx.onrender.com/api/auth/me`
 }
 
 /**
@@ -431,7 +431,7 @@ export const getCurrentUser = async ( options?: Parameters<typeof customFetch>[1
 
 export const getGetCurrentUserQueryKey = () => {
     return [
-    `http://localhost:5000/api/auth/me`
+    `https://codemaster-api-rssx.onrender.com/api/auth/me`
     ] as const;
     }
 
@@ -492,7 +492,7 @@ export const getListProblemsUrl = (params?: ListProblemsParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:5000/api/problems?${stringifiedParams}` : `http://localhost:5000/api/problems`
+  return stringifiedParams.length > 0 ? `https://codemaster-api-rssx.onrender.com/api/problems?${stringifiedParams}` : `https://codemaster-api-rssx.onrender.com/api/problems`
 }
 
 /**
@@ -515,7 +515,7 @@ export const listProblems = async (params?: ListProblemsParams, options?: Parame
 
 export const getListProblemsQueryKey = (params?: ListProblemsParams,) => {
     return [
-    `http://localhost:5000/api/problems`, ...(params ? [params] : [])
+    `https://codemaster-api-rssx.onrender.com/api/problems`, ...(params ? [params] : [])
     ] as const;
     }
 
@@ -569,7 +569,7 @@ export const getGetProblemUrl = (slug: string,) => {
 
 
 
-  return `http://localhost:5000/api/problems/${slug}`
+  return `https://codemaster-api-rssx.onrender.com/api/problems/${slug}`
 }
 
 /**
@@ -592,7 +592,7 @@ export const getProblem = async (slug: string, options?: Parameters<typeof custo
 
 export const getGetProblemQueryKey = (slug: string,) => {
     return [
-    `http://localhost:5000/api/problems/${slug}`
+    `https://codemaster-api-rssx.onrender.com/api/problems/${slug}`
     ] as const;
     }
 
@@ -646,7 +646,7 @@ export const getRunCodeUrl = () => {
 
 
 
-  return `http://localhost:5000/api/submissions/run`
+  return `https://codemaster-api-rssx.onrender.com/api/submissions/run`
 }
 
 /**
@@ -741,7 +741,7 @@ export const getListSubmissionsUrl = (params?: ListSubmissionsParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:5000/api/submissions?${stringifiedParams}` : `http://localhost:5000/api/submissions`
+  return stringifiedParams.length > 0 ? `https://codemaster-api-rssx.onrender.com/api/submissions?${stringifiedParams}` : `https://codemaster-api-rssx.onrender.com/api/submissions`
 }
 
 /**
@@ -764,7 +764,7 @@ export const listSubmissions = async (params?: ListSubmissionsParams, options?: 
 
 export const getListSubmissionsQueryKey = (params?: ListSubmissionsParams,) => {
     return [
-    `http://localhost:5000/api/submissions`, ...(params ? [params] : [])
+    `https://codemaster-api-rssx.onrender.com/api/submissions`, ...(params ? [params] : [])
     ] as const;
     }
 
@@ -818,7 +818,7 @@ export const getSubmitCodeUrl = () => {
 
 
 
-  return `http://localhost:5000/api/submissions`
+  return `https://codemaster-api-rssx.onrender.com/api/submissions`
 }
 
 /**
@@ -906,7 +906,7 @@ export const getGetSubmissionUrl = (id: number,) => {
 
 
 
-  return `http://localhost:5000/api/submissions/${id}`
+  return `https://codemaster-api-rssx.onrender.com/api/submissions/${id}`
 }
 
 /**
@@ -929,7 +929,7 @@ export const getSubmission = async (id: number, options?: Parameters<typeof cust
 
 export const getGetSubmissionQueryKey = (id: number,) => {
     return [
-    `http://localhost:5000/api/submissions/${id}`
+    `https://codemaster-api-rssx.onrender.com/api/submissions/${id}`
     ] as const;
     }
 
@@ -983,7 +983,7 @@ export const getGetDashboardUrl = () => {
 
 
 
-  return `http://localhost:5000/api/dashboard`
+  return `https://codemaster-api-rssx.onrender.com/api/dashboard`
 }
 
 /**
@@ -1006,7 +1006,7 @@ export const getDashboard = async ( options?: Parameters<typeof customFetch>[1])
 
 export const getGetDashboardQueryKey = () => {
     return [
-    `http://localhost:5000/api/dashboard`
+    `https://codemaster-api-rssx.onrender.com/api/dashboard`
     ] as const;
     }
 
@@ -1060,7 +1060,7 @@ export const getGetMyProfileUrl = () => {
 
 
 
-  return `http://localhost:5000/api/users/me`
+  return `https://codemaster-api-rssx.onrender.com/api/users/me`
 }
 
 /**
@@ -1083,7 +1083,7 @@ export const getMyProfile = async ( options?: Parameters<typeof customFetch>[1])
 
 export const getGetMyProfileQueryKey = () => {
     return [
-    `http://localhost:5000/api/users/me`
+    `https://codemaster-api-rssx.onrender.com/api/users/me`
     ] as const;
     }
 
@@ -1137,7 +1137,7 @@ export const getUpdateMyProfileUrl = () => {
 
 
 
-  return `http://localhost:5000/api/users/me`
+  return `https://codemaster-api-rssx.onrender.com/api/users/me`
 }
 
 /**
@@ -1225,7 +1225,7 @@ export const getGetPublicProfileUrl = (username: string,) => {
 
 
 
-  return `http://localhost:5000/api/users/${username}`
+  return `https://codemaster-api-rssx.onrender.com/api/users/${username}`
 }
 
 /**
@@ -1248,7 +1248,7 @@ export const getPublicProfile = async (username: string, options?: Parameters<ty
 
 export const getGetPublicProfileQueryKey = (username: string,) => {
     return [
-    `http://localhost:5000/api/users/${username}`
+    `https://codemaster-api-rssx.onrender.com/api/users/${username}`
     ] as const;
     }
 
@@ -1309,7 +1309,7 @@ export const getGetLeaderboardUrl = (params?: GetLeaderboardParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:5000/api/leaderboard?${stringifiedParams}` : `http://localhost:5000/api/leaderboard`
+  return stringifiedParams.length > 0 ? `https://codemaster-api-rssx.onrender.com/api/leaderboard?${stringifiedParams}` : `https://codemaster-api-rssx.onrender.com/api/leaderboard`
 }
 
 /**
@@ -1332,7 +1332,7 @@ export const getLeaderboard = async (params?: GetLeaderboardParams, options?: Pa
 
 export const getGetLeaderboardQueryKey = (params?: GetLeaderboardParams,) => {
     return [
-    `http://localhost:5000/api/leaderboard`, ...(params ? [params] : [])
+    `https://codemaster-api-rssx.onrender.com/api/leaderboard`, ...(params ? [params] : [])
     ] as const;
     }
 
@@ -1386,7 +1386,7 @@ export const getGetAdminStatsUrl = () => {
 
 
 
-  return `http://localhost:5000/api/admin/stats`
+  return `https://codemaster-api-rssx.onrender.com/api/admin/stats`
 }
 
 /**
@@ -1409,7 +1409,7 @@ export const getAdminStats = async ( options?: Parameters<typeof customFetch>[1]
 
 export const getGetAdminStatsQueryKey = () => {
     return [
-    `http://localhost:5000/api/admin/stats`
+    `https://codemaster-api-rssx.onrender.com/api/admin/stats`
     ] as const;
     }
 
@@ -1470,7 +1470,7 @@ export const getListAdminProblemsUrl = (params?: ListAdminProblemsParams,) => {
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `http://localhost:5000/api/admin/problems?${stringifiedParams}` : `http://localhost:5000/api/admin/problems`
+  return stringifiedParams.length > 0 ? `https://codemaster-api-rssx.onrender.com/api/admin/problems?${stringifiedParams}` : `https://codemaster-api-rssx.onrender.com/api/admin/problems`
 }
 
 /**
@@ -1493,7 +1493,7 @@ export const listAdminProblems = async (params?: ListAdminProblemsParams, option
 
 export const getListAdminProblemsQueryKey = (params?: ListAdminProblemsParams,) => {
     return [
-    `http://localhost:5000/api/admin/problems`, ...(params ? [params] : [])
+    `https://codemaster-api-rssx.onrender.com/api/admin/problems`, ...(params ? [params] : [])
     ] as const;
     }
 
@@ -1547,7 +1547,7 @@ export const getCreateProblemUrl = () => {
 
 
 
-  return `http://localhost:5000/api/admin/problems`
+  return `https://codemaster-api-rssx.onrender.com/api/admin/problems`
 }
 
 /**
@@ -1635,7 +1635,7 @@ export const getUpdateProblemUrl = (id: number,) => {
 
 
 
-  return `http://localhost:5000/api/admin/problems/${id}`
+  return `https://codemaster-api-rssx.onrender.com/api/admin/problems/${id}`
 }
 
 /**
@@ -1724,7 +1724,7 @@ export const getDeleteProblemUrl = (id: number,) => {
 
 
 
-  return `http://localhost:5000/api/admin/problems/${id}`
+  return `https://codemaster-api-rssx.onrender.com/api/admin/problems/${id}`
 }
 
 /**
@@ -1798,7 +1798,7 @@ export const getSetProblemActiveUrl = (id: number,) => {
 
 
 
-  return `http://localhost:5000/api/admin/problems/${id}/active`
+  return `https://codemaster-api-rssx.onrender.com/api/admin/problems/${id}/active`
 }
 
 /**
