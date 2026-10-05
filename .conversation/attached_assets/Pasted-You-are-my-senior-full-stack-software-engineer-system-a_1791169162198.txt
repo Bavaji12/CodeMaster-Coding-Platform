@@ -1,0 +1,1589 @@
+You are my senior full-stack software engineer, system architect, UI/UX designer, debugging mentor, and interview-preparation mentor.
+
+I want to build a complete production-quality web application called:
+
+CODEMASTER
+
+CodeMaster is a LeetCode-style competitive programming and coding interview preparation platform.
+
+IMPORTANT:
+I am a beginner/intermediate developer, so build this project with me STEP BY STEP from zero to completion.
+
+Do NOT dump the entire project at once.
+
+For every step:
+
+1. Explain what we are building.
+2. Tell me exactly which folder/file to open.
+3. Give me the exact terminal command.
+4. Give me the exact code to paste.
+5. Tell me exactly where to paste it.
+6. Tell me how to run/test it.
+7. Wait for my terminal/browser output or screenshot.
+8. Only then move to the next step.
+9. If an error occurs, debug it before continuing.
+10. Never assume a command succeeded.
+11. Never delete working code without explaining why.
+12. Keep the project runnable after every major step.
+
+==================================================
+1. PROJECT GOAL
+==================================================
+
+Build a complete LeetCode-like platform with:
+
+- Landing page
+- User registration
+- User login
+- JWT authentication
+- Password hashing
+- User profile
+- Problems page
+- Problem details page
+- Difficulty filtering
+- Topic filtering
+- Search
+- Code editor
+- Monaco Editor
+- Multiple programming languages
+- Code execution
+- Test cases
+- Submit solution
+- Submission history
+- Accepted/Wrong Answer/Runtime Error/etc.
+- User dashboard
+- Progress tracking
+- Solved problems
+- Streak
+- Problem statistics
+- Leaderboard
+- Admin dashboard
+- Admin problem management
+- Create problem
+- Edit problem
+- Delete problem
+- Test case management
+- Protected routes
+- API validation
+- Error handling
+- Loading states
+- Responsive UI
+- Dark theme
+- Production-ready architecture
+- Deployment
+
+==================================================
+2. TECHNOLOGY STACK
+==================================================
+
+FRONTEND:
+
+- Next.js
+- TypeScript
+- React
+- App Router
+- Tailwind CSS
+- Axios or fetch
+- Monaco Editor
+- React Hot Toast
+- Lucide React / React Icons
+- Recharts where useful
+
+BACKEND:
+
+- Node.js
+- Express.js
+- TypeScript if practical; otherwise clean JavaScript
+- MongoDB
+- Mongoose
+- JWT
+- bcrypt
+- dotenv
+- CORS
+- cookie-parser
+- express-validator or Zod
+- centralized error handling
+
+CODE EXECUTION:
+
+Use a safe external execution system such as Judge0.
+
+Do NOT execute arbitrary user code directly on my backend server.
+
+DATABASE:
+
+MongoDB Atlas.
+
+DEPLOYMENT:
+
+Frontend:
+Vercel
+
+Backend:
+Render / Railway / another suitable production platform
+
+Database:
+MongoDB Atlas
+
+==================================================
+3. CURRENT PROJECT
+==================================================
+
+The project root is:
+
+D:\CODEMASTER
+
+Frontend:
+
+D:\CODEMASTER\client
+
+Important:
+My Next.js project currently uses:
+
+client/
+├── app/
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── public/
+├── package.json
+└── ...
+
+There is NO src folder.
+
+Do NOT force me to create a src folder.
+
+Use the existing root-level app directory.
+
+==================================================
+4. FRONTEND ARCHITECTURE
+==================================================
+
+Use this structure:
+
+client/
+│
+├── app/
+│   ├── page.tsx
+│   ├── layout.tsx
+│   ├── globals.css
+│   │
+│   ├── login/
+│   │   └── page.tsx
+│   │
+│   ├── register/
+│   │   └── page.tsx
+│   │
+│   ├── problems/
+│   │   ├── page.tsx
+│   │   └── [slug]/
+│   │       └── page.tsx
+│   │
+│   ├── dashboard/
+│   │   └── page.tsx
+│   │
+│   ├── profile/
+│   │   └── page.tsx
+│   │
+│   ├── leaderboard/
+│   │   └── page.tsx
+│   │
+│   └── admin/
+│       ├── page.tsx
+│       ├── problems/
+│       │   ├── page.tsx
+│       │   ├── create/
+│       │   │   └── page.tsx
+│       │   └── [id]/
+│       │       └── edit/
+│       │           └── page.tsx
+│
+├── components/
+│   ├── Navbar.tsx
+│   ├── Footer.tsx
+│   ├── Button.tsx
+│   ├── Input.tsx
+│   ├── Modal.tsx
+│   ├── Loader.tsx
+│   ├── ProblemCard.tsx
+│   ├── DifficultyBadge.tsx
+│   ├── CodeEditor.tsx
+│   ├── TestCasePanel.tsx
+│   ├── SubmissionStatus.tsx
+│   ├── StatsCard.tsx
+│   └── ProtectedRoute.tsx
+│
+├── lib/
+│   ├── api.ts
+│   ├── auth.ts
+│   └── utils.ts
+│
+├── hooks/
+│   ├── useAuth.ts
+│   └── useProblems.ts
+│
+├── types/
+│   ├── auth.ts
+│   ├── problem.ts
+│   └── submission.ts
+│
+└── public/
+
+Do not create all files immediately.
+
+Create them only when needed.
+
+==================================================
+5. BACKEND ARCHITECTURE
+==================================================
+
+Create:
+
+D:\CODEMASTER\server
+
+Structure:
+
+server/
+│
+├── src/
+│   ├── server.js
+│   ├── app.js
+│   │
+│   ├── config/
+│   │   └── db.js
+│   │
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Problem.js
+│   │   ├── Submission.js
+│   │   └── TestCase.js
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── problemController.js
+│   │   ├── submissionController.js
+│   │   ├── userController.js
+│   │   └── adminController.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── problemRoutes.js
+│   │   ├── submissionRoutes.js
+│   │   ├── userRoutes.js
+│   │   └── adminRoutes.js
+│   │
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   ├── adminMiddleware.js
+│   │   ├── errorMiddleware.js
+│   │   └── validationMiddleware.js
+│   │
+│   ├── services/
+│   │   ├── judgeService.js
+│   │   └── submissionService.js
+│   │
+│   └── utils/
+│       ├── generateToken.js
+│       └── apiResponse.js
+│
+├── .env
+├── .env.example
+├── package.json
+└── README.md
+
+==================================================
+6. DATABASE MODELS
+==================================================
+
+USER:
+
+Fields:
+
+- username
+- name
+- email
+- password
+- role
+- avatar
+- solvedProblems
+- attemptedProblems
+- streak
+- totalSubmissions
+- acceptedSubmissions
+- createdAt
+- updatedAt
+
+Roles:
+
+- user
+- admin
+
+Never store plain-text passwords.
+
+Use bcrypt.
+
+==================================================
+
+PROBLEM:
+
+Fields:
+
+- title
+- slug
+- description
+- difficulty
+- topics
+- constraints
+- examples
+- starterCode
+- supportedLanguages
+- testCases
+- hiddenTestCases
+- createdBy
+- acceptanceRate
+- totalSubmissions
+- acceptedSubmissions
+- createdAt
+- updatedAt
+
+Difficulty:
+
+- Easy
+- Medium
+- Hard
+
+Topics:
+
+- Array
+- String
+- Hash Table
+- Two Pointers
+- Sliding Window
+- Stack
+- Queue
+- Linked List
+- Binary Search
+- Tree
+- Graph
+- Heap
+- Dynamic Programming
+- Greedy
+- Backtracking
+
+==================================================
+SUBMISSION
+==================================================
+
+Fields:
+
+- user
+- problem
+- language
+- code
+- status
+- runtime
+- memory
+- testCasesPassed
+- totalTestCases
+- errorMessage
+- submittedAt
+
+Statuses:
+
+- Accepted
+- Wrong Answer
+- Time Limit Exceeded
+- Runtime Error
+- Compilation Error
+- Internal Error
+
+==================================================
+7. AUTHENTICATION
+==================================================
+
+Implement:
+
+REGISTER:
+
+POST /api/auth/register
+
+LOGIN:
+
+POST /api/auth/login
+
+LOGOUT:
+
+POST /api/auth/logout
+
+CURRENT USER:
+
+GET /api/auth/me
+
+Use JWT.
+
+Prefer HTTP-only cookies for production authentication.
+
+Implement:
+
+- password hashing
+- JWT generation
+- JWT verification
+- protected routes
+- admin routes
+- logout
+- session persistence
+
+Never expose password hashes to frontend.
+
+==================================================
+8. FRONTEND AUTH
+==================================================
+
+Create:
+
+/login
+
+/register
+
+Use proper forms.
+
+Validation:
+
+- email required
+- valid email
+- password required
+- minimum password length
+- username validation
+
+Display useful errors.
+
+After login:
+
+redirect to:
+
+/dashboard
+
+If unauthenticated:
+
+protected pages should redirect to:
+
+/login
+
+==================================================
+9. LANDING PAGE
+==================================================
+
+Create a professional developer-focused landing page.
+
+Brand:
+
+CodeMaster
+
+Hero:
+
+"Practice Coding.
+Become Better."
+
+Sections:
+
+- Hero
+- Features
+- Popular Problems
+- Why CodeMaster
+- Statistics
+- CTA
+- Footer
+
+Design:
+
+- modern
+- professional
+- responsive
+- dark developer theme
+- clean typography
+- good spacing
+- accessible buttons
+- mobile responsive
+
+Avoid copying LeetCode's exact design.
+
+==================================================
+10. PROBLEMS PAGE
+==================================================
+
+Create:
+
+/problems
+
+Features:
+
+- problem list
+- search
+- difficulty filter
+- topic filter
+- solved indicator
+- pagination
+- problem count
+- acceptance rate
+
+Example:
+
+Two Sum
+Easy
+Array
+Hash Table
+
+Valid Parentheses
+Easy
+String
+Stack
+
+Binary Search
+Easy
+Binary Search
+
+==================================================
+11. PROBLEM DETAILS
+==================================================
+
+Route:
+
+/problems/[slug]
+
+Layout:
+
+LEFT:
+
+- problem title
+- difficulty
+- description
+- examples
+- constraints
+- topics
+
+RIGHT:
+
+- Monaco Editor
+- language selector
+- Run button
+- Submit button
+
+BOTTOM:
+
+- Test Case panel
+- Output
+- Submission result
+
+Make it responsive.
+
+Desktop:
+
+Problem | Editor
+
+Mobile:
+
+Problem
+
+Editor
+
+Tests
+
+==================================================
+12. MONACO EDITOR
+==================================================
+
+Integrate Monaco Editor.
+
+Support initially:
+
+- JavaScript
+- Python
+- Java
+- C++
+
+Provide:
+
+- syntax highlighting
+- line numbers
+- minimap
+- dark theme
+- font size
+- editor settings
+
+Create reusable:
+
+CodeEditor.tsx
+
+Do not place editor logic directly into the problem page.
+
+==================================================
+13. RUN CODE
+==================================================
+
+When user clicks:
+
+Run
+
+Send:
+
+POST /api/submissions/run
+
+Payload:
+
+{
+  problemId,
+  language,
+  code,
+  input
+}
+
+Backend sends code to Judge0.
+
+Return:
+
+- output
+- error
+- execution time
+- memory
+- status
+
+Show result in frontend.
+
+==================================================
+14. SUBMIT CODE
+==================================================
+
+When user clicks:
+
+Submit
+
+Send:
+
+POST /api/submissions
+
+Backend:
+
+1. Validate user.
+2. Validate problem.
+3. Send code to Judge0.
+4. Run against test cases.
+5. Compare outputs.
+6. Determine status.
+7. Save submission.
+8. Update user statistics.
+9. Return result.
+
+Accepted example:
+
+{
+  "status": "Accepted",
+  "runtime": "45 ms",
+  "memory": "12 MB"
+}
+
+==================================================
+15. SECURITY
+==================================================
+
+This is extremely important.
+
+Never directly execute arbitrary user code on the Node.js server.
+
+Use Judge0 or another isolated execution service.
+
+Implement:
+
+- rate limiting
+- input validation
+- CORS restrictions
+- HTTP-only cookies
+- secure JWT handling
+- password hashing
+- environment variables
+- no secrets in Git
+- API error sanitization
+- request size limits
+- admin authorization
+
+Do not commit:
+
+.env
+
+Add:
+
+.env
+
+to .gitignore.
+
+Create:
+
+.env.example
+
+with placeholders.
+
+==================================================
+16. DASHBOARD
+==================================================
+
+Create:
+
+/dashboard
+
+Show:
+
+- problems solved
+- total submissions
+- acceptance rate
+- current streak
+- Easy solved
+- Medium solved
+- Hard solved
+- recent submissions
+- progress chart
+- topic progress
+
+Use Recharts where appropriate.
+
+==================================================
+17. PROFILE
+==================================================
+
+Create:
+
+/profile
+
+Show:
+
+- username
+- name
+- avatar
+- solved count
+- submission count
+- streak
+- joined date
+- recent activity
+
+Allow editing:
+
+- name
+- username
+- avatar
+
+Do not allow users to change their role.
+
+==================================================
+18. SUBMISSION HISTORY
+==================================================
+
+Create submission history UI.
+
+Display:
+
+Problem
+
+Language
+
+Status
+
+Runtime
+
+Memory
+
+Date
+
+Allow filtering:
+
+- Accepted
+- Wrong Answer
+- Runtime Error
+- Compilation Error
+
+Clicking a submission should show:
+
+- code
+- result
+- test cases
+- runtime
+- memory
+
+==================================================
+19. LEADERBOARD
+==================================================
+
+Create:
+
+/leaderboard
+
+Rank users based on:
+
+- solved problems
+- accepted submissions
+- streak
+
+Display:
+
+Rank
+
+Username
+
+Solved
+
+Streak
+
+Acceptance
+
+Create pagination.
+
+==================================================
+20. ADMIN PANEL
+==================================================
+
+Create:
+
+/admin
+
+Only users with role:
+
+admin
+
+can access.
+
+Dashboard:
+
+- total users
+- total problems
+- total submissions
+- accepted submissions
+- system statistics
+
+Problem management:
+
+/admin/problems
+
+Features:
+
+- list problems
+- search
+- create
+- edit
+- delete
+- activate/deactivate
+
+==================================================
+21. CREATE PROBLEM
+==================================================
+
+Admin form:
+
+Title
+
+Description
+
+Difficulty
+
+Topics
+
+Constraints
+
+Examples
+
+Starter code
+
+Languages
+
+Test cases
+
+Hidden test cases
+
+Validate all fields.
+
+Before saving:
+
+show preview.
+
+==================================================
+22. API DESIGN
+==================================================
+
+Use REST APIs.
+
+Auth:
+
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/logout
+GET /api/auth/me
+
+Problems:
+
+GET /api/problems
+GET /api/problems/:slug
+POST /api/problems
+PUT /api/problems/:id
+DELETE /api/problems/:id
+
+Submissions:
+
+POST /api/submissions/run
+POST /api/submissions
+GET /api/submissions
+GET /api/submissions/:id
+
+Users:
+
+GET /api/users/me
+PUT /api/users/me
+GET /api/users/:username
+
+Leaderboard:
+
+GET /api/leaderboard
+
+Admin:
+
+GET /api/admin/stats
+
+==================================================
+23. API RESPONSE FORMAT
+==================================================
+
+Use consistent responses.
+
+Success:
+
+{
+  "success": true,
+  "message": "Success",
+  "data": {}
+}
+
+Error:
+
+{
+  "success": false,
+  "message": "Something went wrong"
+}
+
+Never expose stack traces in production.
+
+==================================================
+24. ERROR HANDLING
+==================================================
+
+Frontend:
+
+- loading states
+- empty states
+- error states
+- toast notifications
+- retry buttons
+
+Backend:
+
+- centralized error middleware
+- validation errors
+- authentication errors
+- authorization errors
+- database errors
+- external API errors
+
+==================================================
+25. RESPONSIVE DESIGN
+==================================================
+
+Must work on:
+
+Desktop
+
+Laptop
+
+Tablet
+
+Mobile
+
+Test:
+
+375px
+
+768px
+
+1024px
+
+1440px
+
+Do not allow horizontal scrolling.
+
+==================================================
+26. UI QUALITY
+==================================================
+
+The application should look like a real startup product.
+
+Use:
+
+- consistent spacing
+- cards
+- buttons
+- badges
+- skeleton loaders
+- hover effects
+- empty states
+- confirmation dialogs
+- accessible forms
+- responsive navigation
+
+Do not overuse animations.
+
+Keep performance high.
+
+==================================================
+27. SAMPLE PROBLEMS
+==================================================
+
+Create at least 20 initial problems.
+
+Include:
+
+1. Two Sum
+2. Valid Parentheses
+3. Reverse String
+4. Best Time to Buy and Sell Stock
+5. Binary Search
+6. Valid Anagram
+7. Contains Duplicate
+8. Maximum Subarray
+9. Merge Two Sorted Lists
+10. Valid Palindrome
+11. Longest Substring Without Repeating Characters
+12. 3Sum
+13. Product of Array Except Self
+14. Group Anagrams
+15. Top K Frequent Elements
+16. Number of Islands
+17. Clone Graph
+18. Binary Tree Level Order Traversal
+19. Coin Change
+20. Longest Increasing Subsequence
+
+Each problem must contain:
+
+- description
+- examples
+- constraints
+- difficulty
+- topics
+- starter code
+- test cases
+
+==================================================
+28. SEED DATABASE
+==================================================
+
+Create a seed script.
+
+Command:
+
+npm run seed
+
+It should populate MongoDB with:
+
+- admin user
+- sample users
+- 20 problems
+
+Never hardcode production passwords.
+
+Use environment variables for seed credentials.
+
+==================================================
+29. TESTING
+==================================================
+
+Backend:
+
+Test:
+
+- register
+- login
+- logout
+- auth middleware
+- problems API
+- submissions API
+- admin authorization
+
+Frontend:
+
+Test:
+
+- login
+- register
+- problem search
+- filtering
+- editor
+- run
+- submit
+- dashboard
+
+Also test responsive layouts.
+
+==================================================
+30. PERFORMANCE
+==================================================
+
+Optimize:
+
+- database queries
+- indexes
+- API response sizes
+- React rendering
+- image loading
+- code splitting
+
+Add MongoDB indexes for frequently searched fields.
+
+==================================================
+31. GIT
+==================================================
+
+Initialize Git.
+
+Create:
+
+.gitignore
+
+Include:
+
+node_modules
+.next
+.env
+.env.local
+dist
+coverage
+
+Commit meaningful milestones:
+
+Initial frontend
+
+Authentication
+
+Problems
+
+Editor
+
+Code execution
+
+Dashboard
+
+Admin
+
+Testing
+
+Production
+
+Use meaningful commit messages.
+
+==================================================
+32. README
+==================================================
+
+Create a professional README.
+
+Include:
+
+# CodeMaster
+
+Description
+
+Features
+
+Tech stack
+
+Architecture
+
+Screenshots
+
+Installation
+
+Environment variables
+
+Frontend setup
+
+Backend setup
+
+MongoDB setup
+
+Judge0 setup
+
+API documentation
+
+Running locally
+
+Testing
+
+Deployment
+
+Future improvements
+
+==================================================
+33. ENVIRONMENT VARIABLES
+==================================================
+
+Frontend:
+
+NEXT_PUBLIC_API_URL=
+
+Backend:
+
+PORT=
+MONGODB_URI=
+JWT_SECRET=
+CLIENT_URL=
+JUDGE0_API_URL=
+JUDGE0_API_KEY=
+
+Never commit real secrets.
+
+==================================================
+34. DEPLOYMENT
+==================================================
+
+Before deployment:
+
+- production environment variables
+- CORS configuration
+- secure cookies
+- HTTPS
+- database connection
+- API URL
+- frontend API configuration
+
+Deploy:
+
+Frontend → Vercel
+
+Backend → Render/Railway
+
+Database → MongoDB Atlas
+
+Code execution → Judge0
+
+==================================================
+35. FINAL PROJECT STRUCTURE
+==================================================
+
+Final structure should approximately be:
+
+CODEMASTER/
+│
+├── client/
+│   ├── app/
+│   ├── components/
+│   ├── hooks/
+│   ├── lib/
+│   ├── types/
+│   ├── public/
+│   ├── package.json
+│   └── ...
+│
+├── server/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   └── utils/
+│   ├── .env.example
+│   ├── package.json
+│   └── README.md
+│
+├── README.md
+└── .gitignore
+
+==================================================
+36. DEVELOPMENT ORDER
+==================================================
+
+Follow EXACTLY this order.
+
+PHASE 1:
+Project setup
+
+PHASE 2:
+Landing page
+
+PHASE 3:
+Backend setup
+
+PHASE 4:
+MongoDB connection
+
+PHASE 5:
+User model
+
+PHASE 6:
+Register
+
+PHASE 7:
+Login
+
+PHASE 8:
+JWT authentication
+
+PHASE 9:
+Protected routes
+
+PHASE 10:
+Problems model
+
+PHASE 11:
+Problems API
+
+PHASE 12:
+Problems frontend
+
+PHASE 13:
+Problem details page
+
+PHASE 14:
+Monaco Editor
+
+PHASE 15:
+Run code
+
+PHASE 16:
+Judge0 integration
+
+PHASE 17:
+Submit solution
+
+PHASE 18:
+Submission history
+
+PHASE 19:
+Dashboard
+
+PHASE 20:
+Profile
+
+PHASE 21:
+Leaderboard
+
+PHASE 22:
+Admin authentication
+
+PHASE 23:
+Admin dashboard
+
+PHASE 24:
+Problem CRUD
+
+PHASE 25:
+Test cases
+
+PHASE 26:
+Validation
+
+PHASE 27:
+Security
+
+PHASE 28:
+Responsive design
+
+PHASE 29:
+Testing
+
+PHASE 30:
+GitHub
+
+PHASE 31:
+Production configuration
+
+PHASE 32:
+Deployment
+
+PHASE 33:
+Final bug fixing
+
+PHASE 34:
+Documentation
+
+==================================================
+37. IMPORTANT CODING RULES
+==================================================
+
+Always write clean code.
+
+Use meaningful variable names.
+
+Avoid unnecessary duplication.
+
+Use reusable components.
+
+Keep frontend and backend separated.
+
+Do not put database logic inside React components.
+
+Do not put business logic directly inside routes.
+
+Use controllers/services.
+
+Use environment variables.
+
+Do not expose secrets.
+
+Do not use fake APIs once the real backend is available.
+
+If a temporary mock is required, clearly label it as temporary and replace it later.
+
+==================================================
+38. BEGINNER-FRIENDLY INSTRUCTIONS
+==================================================
+
+When giving me commands:
+
+Show exactly:
+
+cd D:\CODEMASTER\client
+
+Then:
+
+npm install ...
+
+Do not give 20 commands at once.
+
+Give me maximum 1–3 commands per step.
+
+When editing a file:
+
+Tell me:
+
+1. File path
+2. What to delete
+3. What to paste
+4. Save
+5. How to test
+
+If an error occurs:
+
+Ask me to paste the COMPLETE error.
+
+Then diagnose it.
+
+Do not guess.
+
+==================================================
+39. INTERVIEW PREPARATION
+==================================================
+
+While building the project, explain important concepts that I can mention in interviews.
+
+For example:
+
+Why Next.js?
+
+Why TypeScript?
+
+Why Express?
+
+Why MongoDB?
+
+Why JWT?
+
+Why bcrypt?
+
+Why HTTP-only cookies?
+
+Why Monaco Editor?
+
+Why Judge0?
+
+Why REST API?
+
+Why middleware?
+
+Why MongoDB indexes?
+
+Why separate frontend/backend?
+
+Why code execution must be sandboxed?
+
+Why authentication and authorization are different?
+
+Why use service/controller architecture?
+
+After each major module, give me:
+
+"INTERVIEW EXPLANATION"
+
+with a short human-friendly answer.
+
+==================================================
+40. FINAL PROJECT QUALITY
+==================================================
+
+At completion, CodeMaster should be good enough to demonstrate in:
+
+- SDE interviews
+- Full Stack interviews
+- Backend interviews
+- AI/Software engineering interviews
+- College project demonstrations
+
+It should demonstrate:
+
+Frontend
+
+Backend
+
+Database
+
+Authentication
+
+Authorization
+
+REST APIs
+
+DSA
+
+Code execution
+
+System design
+
+Security
+
+Testing
+
+Deployment
+
+Git/GitHub
+
+==================================================
+START NOW
+==================================================
+
+Do NOT generate the whole project.
+
+Start with PHASE 1 only.
+
+First inspect my existing CodeMaster frontend setup.
+
+My current path is:
+
+D:\CODEMASTER\client
+
+My current Next.js project uses:
+
+app/
+
+not:
+
+src/app/
+
+First tell me how to verify the current setup.
+
+Then wait for my terminal output.
+
+Continue one step at a time until the complete CodeMaster application is finished.
