@@ -3,13 +3,19 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: CodeMaster coding-practice platform API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
-    description: Health operations
+  - name: auth
+  - name: problems
+  - name: submissions
+  - name: users
+  - name: dashboard
+  - name: leaderboard
+  - name: admin
 paths:
   /healthz:
     get:
@@ -24,7 +30,423 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      summary: Create a CodeMaster account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegistrationInput"
+      responses:
+        "201":
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          $ref: "#/components/responses/ApiError"
+        "409":
+          $ref: "#/components/responses/ApiError"
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Sign in to CodeMaster
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CredentialsInput"
+      responses:
+        "200":
+          description: Signed in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          $ref: "#/components/responses/ApiError"
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Sign out
+      responses:
+        "200":
+          description: Signed out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+  /auth/me:
+    get:
+      operationId: getCurrentUser
+      tags: [auth]
+      summary: Get the signed-in user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/ApiError"
+  /problems:
+    get:
+      operationId: listProblems
+      tags: [problems]
+      summary: Search and filter problems
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string }
+        - name: difficulty
+          in: query
+          schema: { type: string, enum: [Easy, Medium, Hard] }
+        - name: topic
+          in: query
+          schema: { type: string }
+        - name: page
+          in: query
+          schema: { type: integer, minimum: 1, default: 1 }
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 50, default: 20 }
+      responses:
+        "200":
+          description: Filtered problem page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemPage"
+  /problems/{slug}:
+    get:
+      operationId: getProblem
+      tags: [problems]
+      summary: Get a problem and its public examples
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Problem details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+        "404":
+          $ref: "#/components/responses/ApiError"
+  /submissions/run:
+    post:
+      operationId: runCode
+      tags: [submissions]
+      summary: Run code against a custom input in an isolated runner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CodeRunInput"
+      responses:
+        "200":
+          description: Execution result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RunResult"
+        "400":
+          $ref: "#/components/responses/ApiError"
+        "503":
+          $ref: "#/components/responses/ApiError"
+  /submissions:
+    get:
+      operationId: listSubmissions
+      tags: [submissions]
+      summary: List the signed-in user's submissions
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [Accepted, Wrong Answer, Time Limit Exceeded, Runtime Error, Compilation Error, Internal Error]
+        - name: page
+          in: query
+          schema: { type: integer, minimum: 1, default: 1 }
+      responses:
+        "200":
+          description: Submission history
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmissionPage"
+        "401":
+          $ref: "#/components/responses/ApiError"
+    post:
+      operationId: submitCode
+      tags: [submissions]
+      summary: Submit code for evaluation against public and hidden tests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmissionInput"
+      responses:
+        "201":
+          description: Evaluated submission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Submission"
+        "401":
+          $ref: "#/components/responses/ApiError"
+  /submissions/{id}:
+    get:
+      operationId: getSubmission
+      tags: [submissions]
+      summary: Get a submission owned by the current user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        "200":
+          description: Submission details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Submission"
+        "404":
+          $ref: "#/components/responses/ApiError"
+  /dashboard:
+    get:
+      operationId: getDashboard
+      tags: [dashboard]
+      summary: Get solved counts, activity, and topic progress
+      responses:
+        "200":
+          description: User progress summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+        "401":
+          $ref: "#/components/responses/ApiError"
+  /users/me:
+    get:
+      operationId: getMyProfile
+      tags: [users]
+      summary: Get the current user's profile
+      responses:
+        "200":
+          description: Current profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "401":
+          $ref: "#/components/responses/ApiError"
+    put:
+      operationId: updateMyProfile
+      tags: [users]
+      summary: Update editable profile fields
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileUpdateInput"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "400":
+          $ref: "#/components/responses/ApiError"
+  /users/{username}:
+    get:
+      operationId: getPublicProfile
+      tags: [users]
+      summary: Get a public user profile
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Public profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "404":
+          $ref: "#/components/responses/ApiError"
+  /leaderboard:
+    get:
+      operationId: getLeaderboard
+      tags: [leaderboard]
+      summary: Get ranked users
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, minimum: 1, default: 1 }
+      responses:
+        "200":
+          description: Leaderboard page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeaderboardPage"
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Get platform-wide statistics
+      responses:
+        "200":
+          description: Admin dashboard statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+        "403":
+          $ref: "#/components/responses/ApiError"
+  /admin/problems:
+    get:
+      operationId: listAdminProblems
+      tags: [admin]
+      summary: List problems, including inactive items
+      parameters:
+        - name: q
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: Admin problem list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdminProblem"
+        "403":
+          $ref: "#/components/responses/ApiError"
+    post:
+      operationId: createProblem
+      tags: [admin]
+      summary: Create a problem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProblemWriteInput"
+      responses:
+        "201":
+          description: Created problem
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminProblem"
+        "400":
+          $ref: "#/components/responses/ApiError"
+        "403":
+          $ref: "#/components/responses/ApiError"
+  /admin/problems/{id}:
+    put:
+      operationId: updateProblem
+      tags: [admin]
+      summary: Update a problem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProblemWriteInput"
+      responses:
+        "200":
+          description: Updated problem
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminProblem"
+        "403":
+          $ref: "#/components/responses/ApiError"
+        "404":
+          $ref: "#/components/responses/ApiError"
+    delete:
+      operationId: deleteProblem
+      tags: [admin]
+      summary: Delete a problem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        "200":
+          description: Deleted problem
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+        "403":
+          $ref: "#/components/responses/ApiError"
+        "404":
+          $ref: "#/components/responses/ApiError"
+  /admin/problems/{id}/active:
+    patch:
+      operationId: setProblemActive
+      tags: [admin]
+      summary: Activate or deactivate a problem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProblemActiveInput"
+      responses:
+        "200":
+          description: Updated problem visibility
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminProblem"
+        "403":
+          $ref: "#/components/responses/ApiError"
+        "404":
+          $ref: "#/components/responses/ApiError"
 components:
+  responses:
+    ApiError:
+      description: Request failed
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
   schemas:
     HealthStatus:
       type: object
@@ -33,4 +455,347 @@ components:
           type: string
       required:
         - status
+    ApiError:
+      type: object
+      properties:
+        error: { type: string }
+      required: [error]
+    MessageResponse:
+      type: object
+      properties:
+        message: { type: string }
+      required: [message]
+    User:
+      type: object
+      properties:
+        id: { type: integer }
+        username: { type: string }
+        name: { type: string }
+        email: { type: string, format: email }
+        avatar: { type: ["string", "null"] }
+        role: { type: string, enum: [user, admin] }
+        solvedCount: { type: integer }
+        currentStreak: { type: integer }
+        totalSubmissions: { type: integer }
+        acceptedSubmissions: { type: integer }
+        joinedAt: { type: string, format: date-time }
+      required: [id, username, name, email, avatar, role, solvedCount, currentStreak, totalSubmissions, acceptedSubmissions, joinedAt]
+    AuthResponse:
+      type: object
+      properties:
+        user: { $ref: "#/components/schemas/User" }
+        message: { type: string }
+      required: [user, message]
+    RegistrationInput:
+      type: object
+      properties:
+        username: { type: string, minLength: 3, maxLength: 24, pattern: "^[a-zA-Z0-9_]+$" }
+        name: { type: string, minLength: 1, maxLength: 80 }
+        email: { type: string, format: email, maxLength: 254 }
+        password: { type: string, minLength: 8, maxLength: 128 }
+      required: [username, name, email, password]
+    CredentialsInput:
+      type: object
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, minLength: 8, maxLength: 128 }
+      required: [email, password]
+    Example:
+      type: object
+      properties:
+        input: { type: string }
+        output: { type: string }
+        explanation: { type: ["string", "null"] }
+      required: [input, output, explanation]
+    TestCase:
+      type: object
+      properties:
+        input: { type: string }
+        output: { type: string }
+      required: [input, output]
+    ProblemSummary:
+      type: object
+      properties:
+        id: { type: integer }
+        slug: { type: string }
+        title: { type: string }
+        difficulty: { type: string, enum: [Easy, Medium, Hard] }
+        topics:
+          type: array
+          items: { type: string }
+        acceptanceRate: { type: number }
+        totalSubmissions: { type: integer }
+        acceptedSubmissions: { type: integer }
+        solved: { type: boolean }
+      required: [id, slug, title, difficulty, topics, acceptanceRate, totalSubmissions, acceptedSubmissions, solved]
+    Problem:
+      type: object
+      properties:
+        id: { type: integer }
+        slug: { type: string }
+        title: { type: string }
+        description: { type: string }
+        difficulty: { type: string, enum: [Easy, Medium, Hard] }
+        topics:
+          type: array
+          items: { type: string }
+        constraints:
+          type: array
+          items: { type: string }
+        examples:
+          type: array
+          items: { $ref: "#/components/schemas/Example" }
+        starterCode:
+          type: object
+          additionalProperties: { type: string }
+        supportedLanguages:
+          type: array
+          items: { type: string }
+        acceptanceRate: { type: number }
+        totalSubmissions: { type: integer }
+        acceptedSubmissions: { type: integer }
+        solved: { type: boolean }
+      required: [id, slug, title, description, difficulty, topics, constraints, examples, starterCode, supportedLanguages, acceptanceRate, totalSubmissions, acceptedSubmissions, solved]
+    ProblemPage:
+      type: object
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/ProblemSummary" }
+        page: { type: integer }
+        limit: { type: integer }
+        total: { type: integer }
+        pages: { type: integer }
+      required: [items, page, limit, total, pages]
+    CodeRunInput:
+      type: object
+      properties:
+        problemId: { type: integer, minimum: 1 }
+        language: { type: string, enum: [javascript, python, java, cpp] }
+        code: { type: string, minLength: 1, maxLength: 50000 }
+        input: { type: string, maxLength: 10000 }
+      required: [problemId, language, code, input]
+    RunResult:
+      type: object
+      properties:
+        status: { type: string }
+        output: { type: ["string", "null"] }
+        error: { type: ["string", "null"] }
+        runtime: { type: ["number", "null"] }
+        memory: { type: ["number", "null"] }
+      required: [status, output, error, runtime, memory]
+    SubmissionInput:
+      type: object
+      properties:
+        problemId: { type: integer, minimum: 1 }
+        language: { type: string, enum: [javascript, python, java, cpp] }
+        code: { type: string, minLength: 1, maxLength: 50000 }
+      required: [problemId, language, code]
+    Submission:
+      type: object
+      properties:
+        id: { type: integer }
+        userId: { type: integer }
+        problemId: { type: integer }
+        problemTitle: { type: string }
+        problemSlug: { type: string }
+        language: { type: string }
+        code: { type: string }
+        status: { type: string, enum: [Accepted, Wrong Answer, "Time Limit Exceeded", "Runtime Error", "Compilation Error", "Internal Error"] }
+        runtime: { type: ["number", "null"] }
+        memory: { type: ["number", "null"] }
+        testCasesPassed: { type: integer }
+        totalTestCases: { type: integer }
+        errorMessage: { type: ["string", "null"] }
+        submittedAt: { type: string, format: date-time }
+      required: [id, userId, problemId, problemTitle, problemSlug, language, code, status, runtime, memory, testCasesPassed, totalTestCases, errorMessage, submittedAt]
+    SubmissionSummary:
+      type: object
+      properties:
+        id: { type: integer }
+        problemId: { type: integer }
+        problemTitle: { type: string }
+        problemSlug: { type: string }
+        language: { type: string }
+        status: { type: string, enum: [Accepted, Wrong Answer, "Time Limit Exceeded", "Runtime Error", "Compilation Error", "Internal Error"] }
+        runtime: { type: ["number", "null"] }
+        memory: { type: ["number", "null"] }
+        testCasesPassed: { type: integer }
+        totalTestCases: { type: integer }
+        submittedAt: { type: string, format: date-time }
+      required: [id, problemId, problemTitle, problemSlug, language, status, runtime, memory, testCasesPassed, totalTestCases, submittedAt]
+    SubmissionPage:
+      type: object
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/Submission" }
+        page: { type: integer }
+        total: { type: integer }
+        pages: { type: integer }
+      required: [items, page, total, pages]
+    ActivityPoint:
+      type: object
+      properties:
+        date: { type: string, format: date }
+        count: { type: integer }
+      required: [date, count]
+    TopicProgress:
+      type: object
+      properties:
+        topic: { type: string }
+        solved: { type: integer }
+        total: { type: integer }
+      required: [topic, solved, total]
+    Dashboard:
+      type: object
+      properties:
+        totalSolved: { type: integer }
+        totalSubmissions: { type: integer }
+        acceptedSubmissions: { type: integer }
+        acceptanceRate: { type: number }
+        currentStreak: { type: integer }
+        easySolved: { type: integer }
+        mediumSolved: { type: integer }
+        hardSolved: { type: integer }
+        activity:
+          type: array
+          items: { $ref: "#/components/schemas/ActivityPoint" }
+        topicProgress:
+          type: array
+          items: { $ref: "#/components/schemas/TopicProgress" }
+        recentSubmissions:
+          type: array
+          items: { $ref: "#/components/schemas/SubmissionSummary" }
+      required: [totalSolved, totalSubmissions, acceptedSubmissions, acceptanceRate, currentStreak, easySolved, mediumSolved, hardSolved, activity, topicProgress, recentSubmissions]
+    ProfileUpdateInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 1, maxLength: 80 }
+        username: { type: string, minLength: 3, maxLength: 24, pattern: "^[a-zA-Z0-9_]+$" }
+        avatar: { type: ["string", "null"], maxLength: 500 }
+      required: [name, username, avatar]
+    Profile:
+      type: object
+      properties:
+        id: { type: integer }
+        username: { type: string }
+        name: { type: string }
+        avatar: { type: ["string", "null"] }
+        role: { type: string, enum: [user, admin] }
+        solvedCount: { type: integer }
+        totalSubmissions: { type: integer }
+        acceptedSubmissions: { type: integer }
+        acceptanceRate: { type: number }
+        currentStreak: { type: integer }
+        joinedAt: { type: string, format: date-time }
+        recentSubmissions:
+          type: array
+          items: { $ref: "#/components/schemas/SubmissionSummary" }
+      required: [id, username, name, avatar, role, solvedCount, totalSubmissions, acceptedSubmissions, acceptanceRate, currentStreak, joinedAt, recentSubmissions]
+    LeaderboardEntry:
+      type: object
+      properties:
+        rank: { type: integer }
+        id: { type: integer }
+        username: { type: string }
+        name: { type: string }
+        avatar: { type: ["string", "null"] }
+        solvedCount: { type: integer }
+        currentStreak: { type: integer }
+        acceptanceRate: { type: number }
+      required: [rank, id, username, name, avatar, solvedCount, currentStreak, acceptanceRate]
+    LeaderboardPage:
+      type: object
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/LeaderboardEntry" }
+        page: { type: integer }
+        pages: { type: integer }
+        total: { type: integer }
+      required: [items, page, pages, total]
+    AdminStats:
+      type: object
+      properties:
+        users: { type: integer }
+        problems: { type: integer }
+        submissions: { type: integer }
+        acceptedSubmissions: { type: integer }
+        acceptanceRate: { type: number }
+      required: [users, problems, submissions, acceptedSubmissions, acceptanceRate]
+    AdminProblem:
+      type: object
+      properties:
+        id: { type: integer }
+        slug: { type: string }
+        title: { type: string }
+        description: { type: string }
+        difficulty: { type: string, enum: [Easy, Medium, Hard] }
+        topics:
+          type: array
+          items: { type: string }
+        constraints:
+          type: array
+          items: { type: string }
+        examples:
+          type: array
+          items: { $ref: "#/components/schemas/Example" }
+        starterCode:
+          type: object
+          additionalProperties: { type: string }
+        supportedLanguages:
+          type: array
+          items: { type: string }
+        testCases:
+          type: array
+          items: { $ref: "#/components/schemas/TestCase" }
+        hiddenTestCases:
+          type: array
+          items: { $ref: "#/components/schemas/TestCase" }
+        active: { type: boolean }
+        acceptanceRate: { type: number }
+        totalSubmissions: { type: integer }
+        acceptedSubmissions: { type: integer }
+      required: [id, slug, title, description, difficulty, topics, constraints, examples, starterCode, supportedLanguages, testCases, hiddenTestCases, active, acceptanceRate, totalSubmissions, acceptedSubmissions]
+    ProblemWriteInput:
+      type: object
+      properties:
+        title: { type: string, minLength: 1, maxLength: 180 }
+        description: { type: string, minLength: 1, maxLength: 30000 }
+        difficulty: { type: string, enum: [Easy, Medium, Hard] }
+        topics:
+          type: array
+          minItems: 1
+          items: { type: string, minLength: 1 }
+        constraints:
+          type: array
+          minItems: 1
+          items: { type: string, minLength: 1 }
+        examples:
+          type: array
+          minItems: 1
+          items: { $ref: "#/components/schemas/Example" }
+        starterCode:
+          type: object
+          additionalProperties: { type: string }
+        supportedLanguages:
+          type: array
+          minItems: 1
+          items: { type: string, enum: [javascript, python, java, cpp] }
+        testCases:
+          type: array
+          minItems: 1
+          items: { $ref: "#/components/schemas/TestCase" }
+        hiddenTestCases:
+          type: array
+          minItems: 1
+          items: { $ref: "#/components/schemas/TestCase" }
+        active: { type: boolean }
+      required: [title, description, difficulty, topics, constraints, examples, starterCode, supportedLanguages, testCases, hiddenTestCases, active]
+    ProblemActiveInput:
+      type: object
+      properties:
+        active: { type: boolean }
+      required: [active]
 

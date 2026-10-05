@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "CodeMaster"
+description = "A competitive programming and interview practice platform with problem discovery, an interactive editor, safe code execution, submissions, progress tracking, leaderboards, and admin problem management."
+version = "1.0.0"
+id = "artifacts/codemaster"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24042
+
+[services.development]
+run = "pnpm --filter @workspace/codemaster run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/codemaster", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/codemaster/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24042"
+BASE_PATH = "/"
